@@ -1,0 +1,13 @@
+Bing_Dataset.csv - obtained from keywordtool.io with keyword 'covid' for Bing search engine
+CDC_Dataset.csv - obtained from cdc.gov website's coronavirus/COVID-19 FAQs
+CNN_Dataset.csv - obtained from CNN's questions and answers for COVID https://www.cnn.com/interactive/2020/health/coronavirus-questions-answers/
+COVID-QA_Dataset.csv - converted from original_qanda.json which is from https://github.com/deepset-ai/COVID-QA
+FDA_Dataset.csv - obtained from fda.gov website's coronavirus FAQs
+IDPH_Dataset.csv - obtained from dph.illinois.gov website's coronavirus FAQs
+John-Hopkins_Dataset.csv - obtained from hopkinsmedicine.org website's coronavirus FAQs
+KeywordTool_Dataset.csv - obtained from keywordtool.io with keywords 'covid', 'coronavirus', 'covid 19' for Google search engine
+Quora_Dataset.csv - obtained from Quora with a search for "covid"
+UN_Dataset.csv - obtained from un.org website's coronavirus FAQs
+WJLA_Dataset.csv - obtained from WJLA's website for coronavirus FAQs https://wjla.com/news/local/frequently-asked-questions-coronavirus
+Yahoo_Dataset.csv - manually scraped from Yahoo search engine's autocomplete suggestions for the same root keywords as Bing_Dataset (e.g. "why covid ...")
+Yahoo-Answers_Dataset.csv - all questions from the first 5 pages of a search for "covid" from Yahoo Answers

@@ -1,6 +1,8 @@
 import csv
 from methods import clean_line, read_tsv
 
+x = 0
+
 def compile_all_questions(input_data, master_dictionary, column_to_source, output_file):
     # Start reading file
     with open(output_file, 'w', newline = '', encoding='UTF-8') as out_file:

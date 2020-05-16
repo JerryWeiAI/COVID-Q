@@ -88,4 +88,4 @@ def get_accuracy(test_question_to_id_path, embedding_path, training_question_to_
 
 
 #           MAIN            #
-print(get_accuracy('dataset/testB.csv', 'dataset/question_embeddings.pickle', 'dataset/train3.csv', 1))
+print(get_accuracy('dataset/testB.csv', 'dataset/question_embeddings.pickle', 'dataset/train3.csv', 3))

@@ -45,7 +45,7 @@ def calculate_source_statistics(input_path, master_dictionary, column_to_source)
 
         if num_questions > 10:
             very_common_questions[list(current_questions)[0]] = num_questions
-        elif num_questions in [2, 3, 4, 5]:
+        elif num_questions in [4, 5]:
             to_be_annotated_ids.append(row[0])
 
         # Count each question
@@ -71,8 +71,8 @@ def calculate_source_statistics(input_path, master_dictionary, column_to_source)
                     result.get(i)[2] += 1
 
     # Print results
-    for key in result.keys():
-        print(f"Source {column_to_source.get(key)} with {result.get(key)[0]} questions and {result.get(key)[1]} answers has {result.get(key)[2]} matched questions")
+    # for key in result.keys():
+    #     print(f"Source {column_to_source.get(key)} with {result.get(key)[0]} questions and {result.get(key)[1]} answers has {result.get(key)[2]} matched questions")
 
     # print("------------------------------------------------------------------------------")
 
@@ -81,11 +81,11 @@ def calculate_source_statistics(input_path, master_dictionary, column_to_source)
 
     # print("------------------------------------------------------------------------------")
 
-    print(very_common_questions)
+    # print(very_common_questions)
     # print(str(len(very_common_questions)))
 
-    # print(to_be_annotated_ids)
-    # print(str(len(to_be_annotated_ids)))
+    print(to_be_annotated_ids)
+    print(str(len(to_be_annotated_ids)))
 
     return result
 

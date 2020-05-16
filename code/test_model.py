@@ -1,6 +1,6 @@
 import operator
 import numpy as np
-from methods import read_pickle, read_csv
+from methods import read_pickle, read_csv, write_dict_to_csv
 
 
 def get_id_to_questions(input_file):
@@ -61,6 +61,7 @@ def get_accuracy(test_question_to_id_path, embedding_path, training_question_to_
     training_questions = training_questions_to_id.keys()
 
     accuracies_by_id = []
+    test_to_predictions = {}
 
     for question_id in test_id_to_questions.keys():
         current_correct = 0
@@ -69,6 +70,7 @@ def get_accuracy(test_question_to_id_path, embedding_path, training_question_to_
         current_questions = test_id_to_questions.get(question_id)
         for test_question in current_questions:
             predicted_neighbors = get_k_nearest_neighbor(test_question, training_questions, question_to_embedding, k)
+            test_to_predictions[test_question] = predicted_neighbors
             print(f"Test: {test_question} | Predictions: {predicted_neighbors}")
 
             if is_correct(training_questions_to_id, predicted_neighbors, question_id):
@@ -80,8 +82,10 @@ def get_accuracy(test_question_to_id_path, embedding_path, training_question_to_
 
         accuracies_by_id.append(id_accuracy)
 
+    write_dict_to_csv('predictions.csv', test_to_predictions)
+
     return round(np.mean(accuracies_by_id), 3)
 
 
 #           MAIN            #
-print(get_accuracy('dataset/testA.csv', 'dataset/question_embeddings.pickle', 1, 'dataset/train3.csv'))
+print(get_accuracy('dataset/testB.csv', 'dataset/question_embeddings.pickle', 'dataset/train3.csv', 1))

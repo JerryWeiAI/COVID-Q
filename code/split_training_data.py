@@ -29,5 +29,5 @@ def get_new_dataset(input_data, num_questions):
 
 #           MAIN            #
 input_data = get_questions('dataset/train3.csv')
-output_data = get_new_dataset(input_data, 1)
-write_dict_to_csv('train1.csv', output_data)
+output_data = get_new_dataset(input_data, 2)
+write_dict_to_csv('train2.csv', output_data)

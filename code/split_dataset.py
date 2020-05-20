@@ -13,14 +13,14 @@ def split_dataset(master_data):
     
     # Count number of questions for each ID
     for row in master_data:
-        question_id = row[0]
-        question = row[1]
+        question_id = row[1]
+        question = row[2]
         index = 0
 
-        if row[2] is 'g':
+        if row[3] == "Author Generated":
             index = 1
 
-        if question_id in id_to_questions:
+        if question_id in id_to_questions.keys():
             id_to_questions.get(question_id)[index].append(question)
         else:
             id_to_questions[question_id] = [[], []]
@@ -33,7 +33,6 @@ def split_dataset(master_data):
         generated_questions = id_to_questions.get(current_id)[1]
 
         if len(real_questions) >= 4:    #If there are at least 4 questions
-            counter += 1
             random.shuffle(real_questions)
             
             for question in real_questions[:3]:
@@ -45,12 +44,14 @@ def split_dataset(master_data):
             for question in generated_questions:
                 testB_dict[question] = current_id
 
+            counter += 1
+
     print(f"{counter} distinct question IDs")
 
     return [train_dict, testA_dict, testB_dict]
 
 #           MAIN            #
-master_data = read_csv('data/master_dataset.csv')
+master_data = read_csv('data/final_master_dataset.csv')
 output_names = 'train3.csv', 'testA.csv', 'testB.csv'
 
 sub_datasets = split_dataset(master_data)

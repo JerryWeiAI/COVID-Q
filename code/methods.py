@@ -1,5 +1,6 @@
 import csv
 import pickle
+import re
 
 # Reads in a pickle as a dictionary
 def read_pickle(input_path):
@@ -55,11 +56,7 @@ def read_tsv(input_file):
     lines = open(input_file, 'r', encoding = 'UTF-8').readlines()
     
     for line in lines:
-        line = line.replace(u'\xa0', ' ')
-        line = line.replace(u'"', '').replace('“', '')
-        line = line.replace("‘", '').replace("’", '').replace("'", '')
-        line = line.replace('-', ' ').replace('–', ' ')
-        line = line.lower()
+        line = clean_line(line)
 
         parts = line[:-1].split('\t')
         result.append(parts)
@@ -70,9 +67,10 @@ def read_tsv(input_file):
 # Removes weird characters from a string
 def clean_line(string):
     string = string.replace(u'\xa0', ' ')
-    string = string.replace(u'"', '').replace('“', '')
+    string = string.replace(u'"', '').replace('“', '').replace('”', '')
     string = string.replace("‘", '').replace("’", '').replace("'", '')
     string = string.replace('-', ' ').replace('–', ' ')
+    string = string.replace(":", '').replace('=', '')
     string = string.lower() 
 
     return string

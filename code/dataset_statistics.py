@@ -16,7 +16,8 @@ def calculate_source_statistics(input_path, master_dictionary, column_to_source)
               10: [0, 0, 0],
               11: [0, 0, 0],
               12: [0, 0, 0],
-              13: [0, 0, 0]}
+              13: [0, 0, 0],
+              14: [0, 0, 0]}
 
     num_questions_dict = {}  # Formatted as key = number; value = number of question IDs that have that many matched questions
     very_common_questions = {}  # Formatted as key = sample question, value = number of matched questions inclusive
@@ -28,7 +29,7 @@ def calculate_source_statistics(input_path, master_dictionary, column_to_source)
     for row in input_data[1:]:
         # Count number of questions associated with this question ID
         all_questions = []
-        for i in range(1, len(row)):
+        for i in range(1, len(row) - 1):    # length - 1 to not count author generated questions
             if row[i] is '':
                 continue
 
@@ -56,6 +57,7 @@ def calculate_source_statistics(input_path, master_dictionary, column_to_source)
             current_questions = set(row[i].split(', '))
 
             for each in current_questions:
+
                 source_dictionary = master_dictionary.get(i)
                 has_answer = False
 
@@ -76,16 +78,16 @@ def calculate_source_statistics(input_path, master_dictionary, column_to_source)
 
     # print("------------------------------------------------------------------------------")
 
-    # for key in sorted(num_questions_dict.keys()):
-    #     print(f"{num_questions_dict.get(key)} questions have {key} answers")
+    for key in sorted(num_questions_dict.keys()):
+        print(f"{num_questions_dict.get(key)} questions IDs have {key} questions")
 
     # print("------------------------------------------------------------------------------")
 
     # print(very_common_questions)
     # print(str(len(very_common_questions)))
 
-    print(to_be_annotated_ids)
-    print(str(len(to_be_annotated_ids)))
+    # print(to_be_annotated_ids)
+    # print(str(len(to_be_annotated_ids)))
 
     return result
 
@@ -128,7 +130,8 @@ column_to_source = {1: 'data/TSVs/KeywordTool_Dataset.tsv',
                     10: 'data/TSVs/Bing_Dataset.tsv',
                     11: 'data/TSVs/Yahoo_Dataset.tsv',
                     12: 'data/TSVs/Yahoo-Answers_Dataset.tsv',
-                    13: 'data/TSVs/Quora_Dataset.tsv'}
+                    13: 'data/TSVs/Quora_Dataset.tsv',
+                    14: 'data/TSVs/Generated_Questions.tsv'}
 
 master_dictionary = compile_all_dictionary(column_to_source)
 calculate_source_statistics(input_file, master_dictionary, column_to_source)

@@ -1,5 +1,6 @@
 import operator
 import numpy as np
+from scipy import spatial
 from methods import read_pickle, read_csv, write_dict_to_csv
 
 
@@ -27,15 +28,23 @@ def get_questions_to_id(input_file):
     return result
 
 
-def get_k_nearest_neighbor(test_question, training_questions, question_to_embedding, k):
+def get_k_nearest_neighbor(test_question, training_questions, question_to_embedding, k, distance_measurement):
     distance_dict = {}      # Dictionary where key is question and value is distance
-    test_embedding = question_to_embedding.get(test_question)
+    test_embedding = question_to_embedding[test_question]
 
     for training_question in training_questions:
         training_embedding = question_to_embedding.get(training_question)
-        current_distance = np.linalg.norm(list(np.subtract(test_embedding, training_embedding)))
+        current_distance = 0
 
-        distance_dict[training_question] = current_distance
+        if distance_measurement == 'Euclidean':
+            current_distance = np.linalg.norm(list(np.subtract(test_embedding, training_embedding)))
+        elif distance_measurement == 'Cosine':
+            current_distance = spatial.distance.cosine(list(test_embedding), list(training_embedding))
+
+        if current_distance is not 0:
+            distance_dict[training_question] = current_distance
+        else:
+            print(f"Error, distance is 0 for question: {training_question}")
     
     sorted_distance_dict = sorted(distance_dict.items(), key=operator.itemgetter(1))
     results = []
@@ -69,9 +78,9 @@ def get_accuracy(test_question_to_id_path, embedding_path, training_question_to_
 
         current_questions = test_id_to_questions.get(question_id)
         for test_question in current_questions:
-            predicted_neighbors = get_k_nearest_neighbor(test_question, training_questions, question_to_embedding, k)
+            predicted_neighbors = get_k_nearest_neighbor(test_question, training_questions, question_to_embedding, k, distance_measurement = 'Euclidean')
             test_to_predictions[test_question] = predicted_neighbors
-            print(f"Test: {test_question} | Predictions: {predicted_neighbors}")
+            # print(f"Test: {test_question} | Predictions: {predicted_neighbors}")
 
             if is_correct(training_questions_to_id, predicted_neighbors, question_id):
                 current_correct += 1
@@ -88,4 +97,8 @@ def get_accuracy(test_question_to_id_path, embedding_path, training_question_to_
 
 
 #           MAIN            #
-print(get_accuracy('dataset/testB.csv', 'dataset/question_embeddings.pickle', 'dataset/train3.csv', 3))
+
+for input_test_set in ['dataset/testA.csv', 'dataset/testB.csv']:
+    print(input_test_set)
+    for n in [1, 3, 5]:
+        print(get_accuracy(input_test_set, 'dataset/question_embeddings_max.pickle', 'dataset/train3.csv', n))

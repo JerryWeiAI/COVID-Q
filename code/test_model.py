@@ -6,7 +6,7 @@ from methods import read_pickle, read_csv, write_dict_to_csv
 
 def get_id_to_questions(input_file):
     result = {}     # Dictionary where key is ID, value is list of questions
-    input_data = read_csv(input_file)   # 2D array where first column is question, second column is question ID
+    input_data = read_csv(input_file, True)   # 2D array where first column is question, second column is question ID
 
     for row in input_data:
         current_id = int(row[1])
@@ -20,7 +20,7 @@ def get_id_to_questions(input_file):
 
 def get_questions_to_id(input_file):
     result = {}     # Dictionary where key is question, value is ID
-    input_data = read_csv(input_file)
+    input_data = read_csv(input_file, True)
 
     for row in input_data:
         result[row[0]] = int(row[1])
@@ -28,7 +28,7 @@ def get_questions_to_id(input_file):
     return result
 
 
-def get_k_nearest_neighbor(test_question, training_questions, question_to_embedding, k, distance_measurement):
+def get_k_nearest_neighbor(test_question, training_questions, question_to_embedding, k, training_questions_to_id, distance_measurement):
     distance_dict = {}      # Dictionary where key is question and value is distance
     test_embedding = question_to_embedding[test_question]
 
@@ -48,9 +48,18 @@ def get_k_nearest_neighbor(test_question, training_questions, question_to_embedd
     
     sorted_distance_dict = sorted(distance_dict.items(), key=operator.itemgetter(1))
     results = []
+    ids = []
 
-    for i in range(k):
-        results.append(sorted_distance_dict[i][0])
+    for i in range(len(sorted_distance_dict)):
+        if len(results) < k:
+            current_prediction = sorted_distance_dict[i][0]
+            current_id = training_questions_to_id[current_prediction]
+
+            if current_id not in ids:
+                results.append(current_prediction)
+                ids.append(current_id)
+        else:
+            break
 
     return results
 
@@ -78,7 +87,7 @@ def get_accuracy(test_question_to_id_path, embedding_path, training_question_to_
 
         current_questions = test_id_to_questions.get(question_id)
         for test_question in current_questions:
-            predicted_neighbors = get_k_nearest_neighbor(test_question, training_questions, question_to_embedding, k, distance_measurement = 'Euclidean')
+            predicted_neighbors = get_k_nearest_neighbor(test_question, training_questions, question_to_embedding, k, training_questions_to_id, distance_measurement = 'Cosine')
             test_to_predictions[test_question] = predicted_neighbors
             # print(f"Test: {test_question} | Predictions: {predicted_neighbors}")
 
@@ -101,4 +110,4 @@ def get_accuracy(test_question_to_id_path, embedding_path, training_question_to_
 for input_test_set in ['dataset/testA.csv', 'dataset/testB.csv']:
     print(input_test_set)
     for n in [1, 3, 5]:
-        print(get_accuracy(input_test_set, 'dataset/question_embeddings_max.pickle', 'dataset/train3.csv', n))
+        print(get_accuracy(input_test_set, 'dataset/question_embeddings.pickle', 'dataset/train3.csv', n))

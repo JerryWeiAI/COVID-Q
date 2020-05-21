@@ -21,17 +21,23 @@ def calculate_source_statistics(input_path, master_dictionary, column_to_source)
 
     num_questions_dict = {}  # Formatted as key = number; value = number of question IDs that have that many matched questions
     very_common_questions = {}  # Formatted as key = sample question, value = number of matched questions inclusive
-    to_be_annotated_ids = []  # List of questions IDS with 2, 3, 4, or 5 matching questions
+    to_be_annotated_ids = []  # List of questions IDs with 2, 3, 4, or 5 matching questions
+    num_questions_w_sources = 0       # Number of question IDs with questions from at least 2 non-official sources
+    num_answered_questions = 0      # Number of question IDs with questions from at least 2 non-official sources that are answered 
 
     input_data = read_tsv(input_path)
 
     # Record dataset statistics
     for row in input_data[1:]:
         # Count number of questions associated with this question ID
-        all_questions = []
+        all_questions = []      # List of questions associated with this question ID
+        num_sources = 0         # Number of sources with a question in this question ID
         for i in range(1, len(row) - 1):    # length - 1 to not count author generated questions
             if row[i] is '':
                 continue
+
+            if i not in [2, 3, 4, 5, 6, 7, 9]:
+                num_sources += 1
 
             current_questions = (set)(row[i].split(', '))
             for question in current_questions:
@@ -49,6 +55,8 @@ def calculate_source_statistics(input_path, master_dictionary, column_to_source)
         elif num_questions in [4, 5]:
             to_be_annotated_ids.append(row[0])
 
+        answered = False
+
         # Count each question
         for i in range(1, len(row)):
             if row[i] is '':
@@ -64,6 +72,7 @@ def calculate_source_statistics(input_path, master_dictionary, column_to_source)
                 if each in source_dictionary:
                     if source_dictionary.get(each) is not '-' and source_dictionary.get(each) is not ' ':
                         has_answer = True
+                        answered = True
                 
                 # Update values
                 result.get(i)[0] += 1
@@ -72,14 +81,26 @@ def calculate_source_statistics(input_path, master_dictionary, column_to_source)
                 if num_questions > 1:
                     result.get(i)[2] += 1
 
+        if num_sources >= 2:
+            num_questions_w_sources += 1
+            
+            if answered is True:
+                num_answered_questions += 1
+            else:
+                if len(all_questions) > 8:
+                    print(all_questions)
+
     # Print results
     # for key in result.keys():
     #     print(f"Source {column_to_source.get(key)} with {result.get(key)[0]} questions and {result.get(key)[1]} answers has {result.get(key)[2]} matched questions")
 
     # print("------------------------------------------------------------------------------")
 
-    for key in sorted(num_questions_dict.keys()):
-        print(f"{num_questions_dict.get(key)} questions IDs have {key} questions")
+    # for key in sorted(num_questions_dict.keys()):
+    #     print(f"{num_questions_dict.get(key)} questions IDs have {key} questions")
+
+    # for key in sorted(num_questions_dict.keys()):
+    #     print(f"({key}, {num_questions_dict.get(key)})")
 
     # print("------------------------------------------------------------------------------")
 
@@ -88,6 +109,8 @@ def calculate_source_statistics(input_path, master_dictionary, column_to_source)
 
     # print(to_be_annotated_ids)
     # print(str(len(to_be_annotated_ids)))
+
+    print(num_answered_questions, num_questions_w_sources)
 
     return result
 

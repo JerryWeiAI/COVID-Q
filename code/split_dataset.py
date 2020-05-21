@@ -51,7 +51,7 @@ def split_dataset(master_data):
     return [train_dict, testA_dict, testB_dict]
 
 #           MAIN            #
-master_data = read_csv('data/final_master_dataset.csv')
+master_data = read_csv('data/final_master_dataset.csv', True)
 output_names = 'train3.csv', 'testA.csv', 'testB.csv'
 
 sub_datasets = split_dataset(master_data)

@@ -8,12 +8,14 @@ def read_pickle(input_path):
 
 
 # Returns 2D representation of a csv file
-def read_csv(input_path):
+def read_csv(input_path, skip_header):
     result = []
 
     with open(input_path, 'r', encoding = 'UTF-8') as file:
         reader = csv.reader(file, delimiter = ',')
-        next(reader, None)
+
+        if skip_header is True:
+            next(reader, None)
 
         for row in reader:
             result.append(row)

@@ -3,7 +3,7 @@ from methods import read_csv, write_dict_to_csv
 
 def get_questions(input_file):
     result = {}     # Dictionary where key is ID, value is list of questions
-    input_data = read_csv(input_file)   # 2D array where first column is question, second column is question ID
+    input_data = read_csv(input_file, True)   # 2D array where first column is question, second column is question ID
 
     for row in input_data:
         if row[1] not in result:

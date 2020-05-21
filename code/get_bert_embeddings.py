@@ -20,7 +20,7 @@ def get_embedding(input_string, tokenizer, model):
 def get_all_embeddings(input_csv, tokenizer, model):
     result = {}     # Dictionary where key = question and value = bert embedding for that question
 
-    reader = read_csv(input_csv)
+    reader = read_csv(input_csv, True)
 
     for row in reader:
         question = row[2]

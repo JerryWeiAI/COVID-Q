@@ -72,7 +72,7 @@ def compile_all_dictionary(column_to_source):
             
 
 def get_id_to_category(input_file):
-    input_data = read_csv(input_file)
+    input_data = read_csv(input_file, True)
 
     id_to_category = {}     # Dict where key is ID and value is category
 

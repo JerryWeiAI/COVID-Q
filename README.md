@@ -2,8 +2,6 @@
 
 This dataset consists of COVID-19 questions which have been annotated into a broad category (e.g. Transmission, Prevention) and a more specific class such that questions in the same class are all asking the same thing.
 
-[Jerry Wei](https://github.com/JerryWei03), Chengyu Huang, Soroush Vosoughi, and Jason Wei.
-
 
 ## Folders included in this respository:
 1. `code` - all code needed to split dataset into training/testing datasets and to run basic BERT baselines.

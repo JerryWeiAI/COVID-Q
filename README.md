@@ -6,6 +6,7 @@ The dataset CSV file can be found at [final_master_dataset.csv](https://github.c
 
 This dataset consists of COVID-19 questions which have been annotated into a broad category (e.g. Transmission, Prevention) and a more specific class such that questions in the same class are all asking the same thing.
 
+Note: Formal definitions of our categories can be found at [this link](https://docs.google.com/document/d/1SgFB3qFo5Wb7PaoziaUtowfT6pQuVDcMrFfOydyV24s/edit?usp=sharing).
 
 ## Folders included in this respository:
 1. `code` - all code needed to split dataset into training/testing datasets and to run basic BERT baselines.

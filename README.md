@@ -1,6 +1,6 @@
 # COVID-Q: 1,690 Questions about COVID-19
 
-Full dataset for the paper "[What are People Asking About COVID-19? A Question Classification Dataset.](https://openreview.net/forum?id=qd51R0JNLl)"
+Full dataset for the paper "[What are People Asking About COVID-19? A Question Classification Dataset](https://openreview.net/forum?id=qd51R0JNLl)"
 
 The dataset CSV file can be found at [final_master_dataset.csv](https://github.com/JerryWei03/COVID-Q/blob/master/final_master_dataset.csv).
 

@@ -8,6 +8,10 @@ This dataset consists of COVID-19 questions which have been annotated into a bro
 
 Note: Formal definitions of our categories can be found at [this link](https://docs.google.com/document/d/1SgFB3qFo5Wb7PaoziaUtowfT6pQuVDcMrFfOydyV24s/edit?usp=sharing).
 
+<p align="center">
+  <img width="610" height="525" src="https://github.com/JerryWei03/COVID-Q/blob/master/Figure.png">
+</p>
+
 ## Folders included in this respository:
 1. `code` - all code needed to split dataset into training/testing datasets and to run basic BERT baselines.
 2. `data` - contains original data (TSVs, CSVs, PDFs) to document all question sources

@@ -78,4 +78,4 @@ We have provided three baseline evaluation methods: k-Nearest Neighbor for both 
 # Citation
 COVID-Q is an open-source dataset and is licensed under the GNU General Public License (v3). If you are using this dataset, please cite:
 
-`Jerry Wei, Chengyu Huang, Soroush Vosoughi, and Jason Wei. What Are People Asking About COVID-19? A Question Classification Dataset. ArXiv, abs/2005.12522. https://arxiv.org/pdf/2005.12522.pdf`
+`Jerry Wei, Chengyu Huang, Soroush Vosoughi, and Jason Wei. What Are People Asking About COVID-19? A Question Classification Dataset. In NLP for COVID-19 Workshop at ACL 2020. https://arxiv.org/pdf/2005.12522.pdf`
